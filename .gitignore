@@ -1,0 +1,16 @@
+# Model and dataset artifacts are published separately on Hugging Face.
+/pretrained_model/
+/datass/
+/dataset/
+/datasets/
+
+# Local environments, training output, and credentials.
+/.venv/
+/venv/
+/outputs/
+/wandb/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+*.log
