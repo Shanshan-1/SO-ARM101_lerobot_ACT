@@ -8,11 +8,11 @@ ACT 根据相机画面与机械臂关节状态，一次预测接下来的一段�
 
 ## 项目资源
 
-| 资源 | 内容 |
-| --- | --- |
-| [ACT 模型](https://huggingface.co/Shanshan777/lerobot_ACT_01) | 训练好的权重、配置及预处理／后处理文件 |
-| [示教数据集](https://huggingface.co/datasets/Shanshan777/lerobot_dataset_01_20261014_233057) | LeRobotDataset v3.0，包含状态、动作、元数据和两路相机视频 |
-| [全流程实验手册](./01-LeRobot-ACT-全流程实战手册.md) | 环境配置、训练、模型下载、真机推理、排错与实验记录 |
+| 资源 | 网址或文件 | 内容 |
+| --- | --- | --- |
+| ACT 模型 | <https://huggingface.co/Shanshan777/lerobot_ACT_01> | 训练好的权重、配置及预处理／后处理文件 |
+| 示教数据集 | <https://huggingface.co/datasets/Shanshan777/lerobot_dataset_01_20261014_233057> | LeRobotDataset v3.0，包含状态、动作、元数据和两路相机视频 |
+| 全流程实验手册 | [01-LeRobot-ACT-全流程实战手册.md](./01-LeRobot-ACT-全流程实战手册.md) | 环境配置、训练、模型下载、真机推理、排错与实验记录 |
 
 模型和数据集托管在 Hugging Face；本仓库主要存放项目介绍与复现文档。
 
@@ -32,12 +32,13 @@ ACT 根据相机画面与机械臂关节状态，一次预测接下来的一段�
 
 ## 真机执行演示
 
-**视频待补充。** 后续会在这里放置一段 SO-101 执行 `Grab Box` 的短视频，展示机械臂动作与任务结果。
+SO-101 真机执行录像：
 
-<!-- 视频上传后，将上方占位文字替换为视频链接，例如：
-[▶ 观看真机执行演示](./media/so101-act-demo.mp4)
-也可以使用 GitHub 上传视频后生成的附件链接。
--->
+<video controls width="720">
+  <source src="./media/so101-act-demo.mp4" type="video/mp4">
+</video>
+
+[▶ 打开或下载演示视频](./media/so101-act-demo.mp4)
 
 ## 如何复现
 
