@@ -1,5 +1,49 @@
-# Welcome to GitHub Desktop!
+# SO-ARM101 / SO-101：LeRobot ACT 抓取实验
 
-This is your README. READMEs are where you can communicate what your project is and how to use it.
+本项目记录一次使用 [LeRobot](https://github.com/huggingface/lerobot) 和 **ACT（Action Chunking with Transformers）** 策略完成的 SO-101 机械臂抓取实验。任务是 `Grab Box`：用前视与腕部两路相机采集示教数据，在云端训练策略，再将模型部署到真机进行推理。
 
-Write your name on line 6, save it, and then head back to GitHub Desktop.
+ACT 根据相机画面与机械臂关节状态，一次预测接下来的一段动作。本实验用 40 条人工示教训练该策略，目标是让机械臂执行抓取箱子的动作。
+
+> 当前已完成 50,000 步训练，并跑通 60 秒真机推理。**抓取成功率尚未经过多轮测试统计**；训练损失和推理速度不代表抓取成功率。
+
+## 项目资源
+
+| 资源 | 网址或文件 | 内容 |
+| --- | --- | --- |
+| ACT 模型 | <https://huggingface.co/Shanshan777/lerobot_ACT_01> | 训练好的权重、配置及预处理／后处理文件 |
+| 示教数据集 | <https://huggingface.co/datasets/Shanshan777/lerobot_dataset_01_20261014_233057> | LeRobotDataset v3.0，包含状态、动作、元数据和两路相机视频 |
+| 全流程实验手册 | [01-LeRobot-ACT-全流程实战手册.md](./01-LeRobot-ACT-全流程实战手册.md) | 环境配置、训练、模型下载、真机推理、排错与实验记录 |
+
+模型和数据集托管在 Hugging Face；本仓库主要存放项目介绍与复现文档。
+
+## 实验概况
+
+| 项目 | 本次实验 |
+| --- | --- |
+| 机器人 | SO-101 follower，6 个动作维度 |
+| 任务 | `Grab Box` |
+| 示教数据 | 40 条 episode，17,961 帧，30 fps |
+| 视觉输入 | `front`、`wrist` 两路 480 × 640 相机 |
+| 策略 | ACT，`chunk_size=100` |
+| 训练 | 50,000 步，batch size 8 |
+| 真机推理 | 60 秒 rollout；实测控制循环平均 28.29 Hz |
+
+以上训练与推理记录见[实验手册第 10 节](./01-LeRobot-ACT-全流程实战手册.md#10-本次实验结果)。目前可确认模型加载、相机连接和真机控制循环正常结束；抓取动作与结果仍需通过视频和多轮测试验证。
+
+## 真机执行演示
+
+SO-101 真机执行录像：
+
+<video controls width="720">
+  <source src="./media/so101-act-demo.mp4" type="video/mp4">
+</video>
+
+[▶ 打开或下载演示视频](./media/so101-act-demo.mp4)
+
+## 如何复现
+
+1. 阅读[全流程实验手册](./01-LeRobot-ACT-全流程实战手册.md)，安装 LeRobot、视频解码依赖并完成机械臂标定。
+2. 从[数据集页面](https://huggingface.co/datasets/Shanshan777/lerobot_dataset_01_20261014_233057)获取数据。手册中的 `local/datass` 和本地路径是原实验使用的配置；改用线上数据集时，需要相应修改数据集 ID 与路径。
+3. 训练命令及参数见手册第 4 节。直接运行已发布模型时，在手册第 7 节的真机推理命令中将 `--policy.path` 改为 `Shanshan777/lerobot_ACT_01`，并按本机实际情况设置串口、标定 ID 和两路相机序号。
+
+真机运行前请先核对标定和相机映射，并按手册第 7 节的流程操作。
